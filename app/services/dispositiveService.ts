@@ -64,12 +64,6 @@ export const DispositiveService = {
     if (!existingDispositive) {
       throw new Error('Dispositive not found');
     }
-
-    //verify that the user exists
-    //must communicate the account managmentservice 
-    if (data.user_id !== null) {
-    }
-
     return DispositiveModel.assignUser(id, data);
   },
 
