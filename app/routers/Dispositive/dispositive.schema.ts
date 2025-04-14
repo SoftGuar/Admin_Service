@@ -22,6 +22,7 @@ const productProperties = {
 };
 
 export const createDispositiveSchema = {
+  tags : ['Dispositives'],
   body: Type.Object({
     type: Type.String(),
     start_date: Type.String({ format: 'date-time' }),
@@ -47,6 +48,7 @@ export const createDispositiveSchema = {
 };
 
 export const getDispositivesSchema = {
+  tags : ['Dispositives'],
   response: {
     200: Type.Object({
       success: Type.Literal(true),
@@ -61,6 +63,7 @@ export const getDispositivesSchema = {
 };
 
 export const getDispositiveByIdSchema = {
+  tags : ['Dispositives'],
   params: Type.Object({
     id: Type.String()
   }),
@@ -80,6 +83,7 @@ export const getDispositiveByIdSchema = {
 };
 
 export const getDispositivesByProductSchema = {
+  tags : ['Dispositives'],
   params: Type.Object({
     productId: Type.String()
   }),
@@ -101,6 +105,7 @@ export const getDispositivesByProductSchema = {
 };
 
 export const updateDispositiveSchema = {
+  tags : ['Dispositives'],
   params: Type.Object({
     id: Type.String()
   }),
@@ -135,6 +140,7 @@ export const updateDispositiveSchema = {
 };
 
 export const assignUserSchema = {
+  tags : ['Dispositives'],
   params: Type.Object({
     id: Type.String()
   }),
@@ -161,6 +167,7 @@ export const assignUserSchema = {
 };
 
 export const blockDispositiveSchema = {
+  tags : ['Dispositives'],
   params: Type.Object({
     id: Type.String()
   }),
@@ -187,6 +194,7 @@ export const blockDispositiveSchema = {
 };
 
 export const deleteDispositiveSchema = {
+  tags : ['Dispositives'],
   params: Type.Object({
     id: Type.String()
   }),

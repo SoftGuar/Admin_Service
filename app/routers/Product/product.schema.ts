@@ -8,6 +8,7 @@ const productProperties = {
 };
 
 export const createProductSchema = {
+  tags : ['Products'],
   body: Type.Object({
     name: Type.String(),
     description: Type.Optional(Type.String()),
@@ -26,6 +27,7 @@ export const createProductSchema = {
 };
 
 export const getProductsSchema = {
+  tags : ['Products'],
   response: {
     200: Type.Object({
       success: Type.Literal(true),
@@ -35,6 +37,7 @@ export const getProductsSchema = {
 };
 
 export const getProductByIdSchema = {
+  tags : ['Products'],
   params: Type.Object({
     id: Type.String()
   }),
@@ -64,6 +67,7 @@ export const getProductByIdSchema = {
 };
 
 export const updateProductSchema = {
+  tags : ['Products'],
   params: Type.Object({
     id: Type.String()
   }),
@@ -91,6 +95,7 @@ export const updateProductSchema = {
 };
 
 export const deleteProductSchema = {
+  tags : ['Products'],
   params: Type.Object({
     id: Type.String()
   }),
