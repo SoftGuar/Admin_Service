@@ -1,4 +1,5 @@
 import { Type } from '@sinclair/typebox';
+import { CommonErrorResponses } from '../baseSchema';
 
 // Common schema for dispositive data
 const dispositiveProperties = {
@@ -40,10 +41,7 @@ export const createDispositiveSchema = {
         Product: Type.Object(productProperties)
       })
     }),
-    400: Type.Object({
-      success: Type.Literal(false),
-      message: Type.String()
-    })
+    ...CommonErrorResponses,
   }
 };
 
@@ -75,10 +73,7 @@ export const getDispositiveByIdSchema = {
         Product: Type.Object(productProperties)
       })
     }),
-    404: Type.Object({
-      success: Type.Literal(false),
-      message: Type.String()
-    })
+    ...CommonErrorResponses,
   }
 };
 
@@ -97,10 +92,7 @@ export const getDispositivesByProductSchema = {
         })
       )
     }),
-    404: Type.Object({
-      success: Type.Literal(false),
-      message: Type.String()
-    })
+    ...CommonErrorResponses,
   }
 };
 
@@ -128,14 +120,7 @@ export const updateDispositiveSchema = {
         Product: Type.Object(productProperties)
       })
     }),
-    400: Type.Object({
-      success: Type.Literal(false),
-      message: Type.String()
-    }),
-    404: Type.Object({
-      success: Type.Literal(false),
-      message: Type.String()
-    })
+    ...CommonErrorResponses,
   }
 };
 
@@ -155,14 +140,7 @@ export const assignUserSchema = {
         Product: Type.Object(productProperties)
       })
     }),
-    400: Type.Object({
-      success: Type.Literal(false),
-      message: Type.String()
-    }),
-    404: Type.Object({
-      success: Type.Literal(false),
-      message: Type.String()
-    })
+    ...CommonErrorResponses,
   }
 };
 
@@ -182,14 +160,7 @@ export const blockDispositiveSchema = {
         Product: Type.Object(productProperties)
       })
     }),
-    400: Type.Object({
-      success: Type.Literal(false),
-      message: Type.String()
-    }),
-    404: Type.Object({
-      success: Type.Literal(false),
-      message: Type.String()
-    })
+    ...CommonErrorResponses,
   }
 };
 
@@ -203,9 +174,6 @@ export const deleteDispositiveSchema = {
       success: Type.Literal(true),
       message: Type.String()
     }),
-    404: Type.Object({
-      success: Type.Literal(false),
-      message: Type.String()
-    })
+    ...CommonErrorResponses,
   }
 };
