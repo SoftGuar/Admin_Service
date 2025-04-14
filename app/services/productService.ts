@@ -1,10 +1,14 @@
 import { ProductModel, CreateProductInput, UpdateProductInput } from '../models/product.model';
+import { InvalidProductPriceError } from '../errors/products/InvalidProductPrice';
+import { ProductNotFoundError } from '../errors/products/ProductNotFoundError';
 
 export const ProductService = {
   createProduct: async (productData: CreateProductInput) => {
-    // Validate price is positive
     if (productData.price <= 0) {
-      throw new Error('Product price must be positive');
+      throw new InvalidProductPriceError(
+        productData.price,
+        'ProductService.createProduct'
+      );
     }
 
     return ProductModel.create(productData);
@@ -13,8 +17,9 @@ export const ProductService = {
   getProductById: async (id: number) => {
     const product = await ProductModel.findById(id);
     if (!product) {
-      throw new Error('Product not found');
+      throw new ProductNotFoundError(id, 'ProductService.getProductById');
     }
+
     return product;
   },
 
@@ -23,28 +28,27 @@ export const ProductService = {
   },
 
   updateProduct: async (id: number, productData: UpdateProductInput) => {
-    // Verify product exists
     const existingProduct = await ProductModel.findById(id);
     if (!existingProduct) {
-      throw new Error('Product not found');
+      throw new ProductNotFoundError(id, 'ProductService.updateProduct');
     }
 
-    // Validate price if provided
     if (productData.price !== undefined && productData.price <= 0) {
-      throw new Error('Product price must be positive');
+      throw new InvalidProductPriceError(
+        productData.price,
+        'ProductService.updateProduct'
+      );
     }
 
     return ProductModel.update(id, productData);
   },
 
   deleteProduct: async (id: number) => {
-    // Verify product exists
     const existingProduct = await ProductModel.findById(id);
     if (!existingProduct) {
-      throw new Error('Product not found');
+      throw new ProductNotFoundError(id, 'ProductService.deleteProduct');
     }
 
-    // Note: With Prisma's onDelete: Cascade, this will also delete related dispositives
     return ProductModel.delete(id);
   }
 };

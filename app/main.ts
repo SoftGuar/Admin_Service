@@ -43,8 +43,7 @@ async function startServer() {
   // Check database connection first
   await checkDatabaseConnection();
   
-  // 1. Register middlewares
-  registerMiddlewares(fastify);
+
 
   // 2. Register Swagger plugin (generates the OpenAPI JSON/YAML endpoints)
   fastify.register(fastifySwagger as any, {
@@ -69,6 +68,10 @@ async function startServer() {
   fastify.register(fastifySwaggerUi, {
     routePrefix: '/docs'
   });
+
+
+  // 1. Register middlewares
+  registerMiddlewares(fastify);
 
   // 2. Register routes
   registerRoutes(fastify);

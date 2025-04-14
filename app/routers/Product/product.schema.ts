@@ -1,4 +1,5 @@
 import { Type } from '@sinclair/typebox';
+import { CommonErrorResponses } from '../baseSchema';
 
 const productProperties = {
   id: Type.Number(),
@@ -19,10 +20,7 @@ export const createProductSchema = {
       success: Type.Literal(true),
       data: Type.Object(productProperties)
     }),
-    400: Type.Object({
-      success: Type.Literal(false),
-      message: Type.String()
-    })
+    ...CommonErrorResponses,
   }
 };
 
@@ -59,10 +57,7 @@ export const getProductByIdSchema = {
         }))
       })
     }),
-    404: Type.Object({
-      success: Type.Literal(false),
-      message: Type.String()
-    })
+    ...CommonErrorResponses,
   }
 };
 
@@ -83,14 +78,7 @@ export const updateProductSchema = {
       success: Type.Literal(true),
       data: Type.Object(productProperties)
     }),
-    400: Type.Object({
-      success: Type.Literal(false),
-      message: Type.String()
-    }),
-    404: Type.Object({
-      success: Type.Literal(false),
-      message: Type.String()
-    })
+    ...CommonErrorResponses,
   }
 };
 
@@ -104,9 +92,6 @@ export const deleteProductSchema = {
       success: Type.Literal(true),
       message: Type.String()
     }),
-    404: Type.Object({
-      success: Type.Literal(false),
-      message: Type.String()
-    })
+    ...CommonErrorResponses,
   }
 };
