@@ -10,7 +10,10 @@ const dispositiveProperties = {
   MAC: Type.String(),
   state: Type.String(),
   user_id: Type.Union([Type.Number(), Type.Null()]),
-  product_id: Type.Number()
+  product_id: Type.Number(),
+  created_at: Type.String({ format: 'date-time' }),
+  updated_at: Type.String({ format: 'date-time' })
+
 };
 
 // Product data included in responses
@@ -18,7 +21,10 @@ const productProperties = {
   id: Type.Number(),
   name: Type.String(),
   description: Type.Union([Type.String(), Type.Null()]),
-  price: Type.Number()
+  price: Type.Number(),
+  created_at: Type.String({ format: 'date-time' }),
+  updated_at: Type.String({ format: 'date-time' })
+
 };
 
 export const createDispositiveSchema = {
