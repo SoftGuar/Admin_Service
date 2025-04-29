@@ -1,4 +1,5 @@
 import { Type } from '@sinclair/typebox';
+import { CommonErrorResponses } from '../baseSchema';
 
 // Common schema for dispositive data
 const dispositiveProperties = {
@@ -28,6 +29,7 @@ const productProperties = {
 };
 
 export const createDispositiveSchema = {
+  tags : ['Dispositives'],
   body: Type.Object({
     type: Type.String(),
     start_date: Type.String({ format: 'date-time' }),
@@ -45,14 +47,12 @@ export const createDispositiveSchema = {
         Product: Type.Object(productProperties)
       })
     }),
-    400: Type.Object({
-      success: Type.Literal(false),
-      message: Type.String()
-    })
+    ...CommonErrorResponses,
   }
 };
 
 export const getDispositivesSchema = {
+  tags : ['Dispositives'],
   response: {
     200: Type.Object({
       success: Type.Literal(true),
@@ -67,6 +67,7 @@ export const getDispositivesSchema = {
 };
 
 export const getDispositiveByIdSchema = {
+  tags : ['Dispositives'],
   params: Type.Object({
     id: Type.String()
   }),
@@ -78,14 +79,12 @@ export const getDispositiveByIdSchema = {
         Product: Type.Object(productProperties)
       })
     }),
-    404: Type.Object({
-      success: Type.Literal(false),
-      message: Type.String()
-    })
+    ...CommonErrorResponses,
   }
 };
 
 export const getDispositivesByProductSchema = {
+  tags : ['Dispositives'],
   params: Type.Object({
     productId: Type.String()
   }),
@@ -99,14 +98,12 @@ export const getDispositivesByProductSchema = {
         })
       )
     }),
-    404: Type.Object({
-      success: Type.Literal(false),
-      message: Type.String()
-    })
+    ...CommonErrorResponses,
   }
 };
 
 export const updateDispositiveSchema = {
+  tags : ['Dispositives'],
   params: Type.Object({
     id: Type.String()
   }),
@@ -129,18 +126,12 @@ export const updateDispositiveSchema = {
         Product: Type.Object(productProperties)
       })
     }),
-    400: Type.Object({
-      success: Type.Literal(false),
-      message: Type.String()
-    }),
-    404: Type.Object({
-      success: Type.Literal(false),
-      message: Type.String()
-    })
+    ...CommonErrorResponses,
   }
 };
 
 export const assignUserSchema = {
+  tags : ['Dispositives'],
   params: Type.Object({
     id: Type.String()
   }),
@@ -155,18 +146,12 @@ export const assignUserSchema = {
         Product: Type.Object(productProperties)
       })
     }),
-    400: Type.Object({
-      success: Type.Literal(false),
-      message: Type.String()
-    }),
-    404: Type.Object({
-      success: Type.Literal(false),
-      message: Type.String()
-    })
+    ...CommonErrorResponses,
   }
 };
 
 export const blockDispositiveSchema = {
+  tags : ['Dispositives'],
   params: Type.Object({
     id: Type.String()
   }),
@@ -181,18 +166,12 @@ export const blockDispositiveSchema = {
         Product: Type.Object(productProperties)
       })
     }),
-    400: Type.Object({
-      success: Type.Literal(false),
-      message: Type.String()
-    }),
-    404: Type.Object({
-      success: Type.Literal(false),
-      message: Type.String()
-    })
+    ...CommonErrorResponses,
   }
 };
 
 export const deleteDispositiveSchema = {
+  tags : ['Dispositives'],
   params: Type.Object({
     id: Type.String()
   }),
@@ -201,9 +180,6 @@ export const deleteDispositiveSchema = {
       success: Type.Literal(true),
       message: Type.String()
     }),
-    404: Type.Object({
-      success: Type.Literal(false),
-      message: Type.String()
-    })
+    ...CommonErrorResponses,
   }
 };

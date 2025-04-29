@@ -5,20 +5,22 @@
   "type": "commonjs",
   "scripts": {
     "start": "ts-node app/main.ts",
-    "dev": "ts-node app/main.ts",
+    "dev": "nodemon --watch 'app/**/*.ts' --exec ts-node app/main.ts",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
     "build": "tsc"
-    
   },
   "dependencies": {
     "@fastify/cors": "^11.0.0",
+    "@fastify/swagger": "^9.4.2",
+    "@fastify/swagger-ui": "^5.2.2",
     "@prisma/client": "^6.5.0",
     "@prisma/extension-accelerate": "^1.2.2",
     "@sinclair/typebox": "^0.34.30",
     "dotenv": "^16.4.7",
     "fastify": "^5.2.0",
+    "nodemon": "^3.1.9",
     "prisma": "^6.5.0"
   },
   "devDependencies": {

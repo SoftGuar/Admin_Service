@@ -1,4 +1,5 @@
 import { Type } from '@sinclair/typebox';
+import { CommonErrorResponses } from '../baseSchema';
 
 const productProperties = {
   id: Type.Number(),
@@ -11,6 +12,7 @@ const productProperties = {
 };
 
 export const createProductSchema = {
+  tags : ['Products'],
   body: Type.Object({
     name: Type.String(),
     description: Type.Optional(Type.String()),
@@ -21,14 +23,12 @@ export const createProductSchema = {
       success: Type.Literal(true),
       data: Type.Object(productProperties)
     }),
-    400: Type.Object({
-      success: Type.Literal(false),
-      message: Type.String()
-    })
+    ...CommonErrorResponses,
   }
 };
 
 export const getProductsSchema = {
+  tags : ['Products'],
   response: {
     200: Type.Object({
       success: Type.Literal(true),
@@ -38,6 +38,7 @@ export const getProductsSchema = {
 };
 
 export const getProductByIdSchema = {
+  tags : ['Products'],
   params: Type.Object({
     id: Type.String()
   }),
@@ -62,14 +63,12 @@ export const getProductByIdSchema = {
         }))
       })
     }),
-    404: Type.Object({
-      success: Type.Literal(false),
-      message: Type.String()
-    })
+    ...CommonErrorResponses,
   }
 };
 
 export const updateProductSchema = {
+  tags : ['Products'],
   params: Type.Object({
     id: Type.String()
   }),
@@ -85,18 +84,12 @@ export const updateProductSchema = {
       success: Type.Literal(true),
       data: Type.Object(productProperties)
     }),
-    400: Type.Object({
-      success: Type.Literal(false),
-      message: Type.String()
-    }),
-    404: Type.Object({
-      success: Type.Literal(false),
-      message: Type.String()
-    })
+    ...CommonErrorResponses,
   }
 };
 
 export const deleteProductSchema = {
+  tags : ['Products'],
   params: Type.Object({
     id: Type.String()
   }),
@@ -105,9 +98,6 @@ export const deleteProductSchema = {
       success: Type.Literal(true),
       message: Type.String()
     }),
-    404: Type.Object({
-      success: Type.Literal(false),
-      message: Type.String()
-    })
+    ...CommonErrorResponses,
   }
 };
