@@ -62,9 +62,6 @@ export const DispositiveService = {
     if (!existingDispositive) {
       throw new DispositiveNotFoundError(id, 'DispositiveService.assignUserToDispositive');
     }
-
-    // (Optional: Add user existence validation if needed)
-
     return DispositiveModel.assignUser(id, data);
   },
 
