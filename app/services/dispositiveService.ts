@@ -60,8 +60,8 @@ export const DispositiveService = {
   async assignUserToDispositive(id: number, data: AssignUserInput) {
     const existingDispositive = await DispositiveModel.findById(id);
     if (!existingDispositive) {
-      throw new DispositiveNotFoundError(id, 'DispositiveService.assignUserToDispositive');
-    }
+       throw new DispositiveNotFoundError(id, 'DispositiveService.assignUserToDispositive');
+      }   
     return DispositiveModel.assignUser(id, data);
   },
 
@@ -70,7 +70,6 @@ export const DispositiveService = {
     if (!existingDispositive) {
       throw new DispositiveNotFoundError(id, 'DispositiveService.blockDispositive');
     }
-
     return DispositiveModel.blockDispositive(id, data);
   },
 
