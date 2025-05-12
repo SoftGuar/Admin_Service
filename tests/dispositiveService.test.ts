@@ -60,7 +60,7 @@ describe('DispositiveService', () => {
       (ProductModel.findById as jest.Mock).mockResolvedValue(null);
 
       await expect(DispositiveService.createDispositive(mockDispositiveData))
-        .rejects.toThrow('Product not found');
+        .rejects.toThrow('Product with ID 999 was not found.');
       
       expect(ProductModel.findById).toHaveBeenCalledWith(999);
       expect(DispositiveModel.create).not.toHaveBeenCalled();
@@ -88,7 +88,7 @@ describe('DispositiveService', () => {
       (DispositiveModel.findById as jest.Mock).mockResolvedValue(null);
 
       await expect(DispositiveService.getDispositiveById(999))
-        .rejects.toThrow('Dispositive not found');
+        .rejects.toThrow('Dispositive with ID 999 was not found.');
       
       expect(DispositiveModel.findById).toHaveBeenCalledWith(999);
     });
@@ -137,7 +137,7 @@ describe('DispositiveService', () => {
       (ProductModel.findById as jest.Mock).mockResolvedValue(null);
 
       await expect(DispositiveService.getDispositivesByProduct(999))
-        .rejects.toThrow('Product not found');
+        .rejects.toThrow('Product with ID 999 was not found.');
       
       expect(ProductModel.findById).toHaveBeenCalledWith(999);
       expect(DispositiveModel.findByProduct).not.toHaveBeenCalled();
@@ -179,7 +179,7 @@ describe('DispositiveService', () => {
       (DispositiveModel.findById as jest.Mock).mockResolvedValue(null);
 
       await expect(DispositiveService.updateDispositive(999, mockUpdateData))
-        .rejects.toThrow('Dispositive not found');
+        .rejects.toThrow('Dispositive with ID 999 was not found.');
       
       expect(DispositiveModel.findById).toHaveBeenCalledWith(999);
       expect(DispositiveModel.update).not.toHaveBeenCalled();
@@ -200,7 +200,7 @@ describe('DispositiveService', () => {
       (ProductModel.findById as jest.Mock).mockResolvedValue(null);
 
       await expect(DispositiveService.updateDispositive(1, mockUpdateData))
-        .rejects.toThrow('Product not found');
+        .rejects.toThrow('Product with ID 999 was not found.');
       
       expect(DispositiveModel.findById).toHaveBeenCalledWith(1);
       expect(ProductModel.findById).toHaveBeenCalledWith(999);
@@ -241,7 +241,7 @@ describe('DispositiveService', () => {
       (DispositiveModel.findById as jest.Mock).mockResolvedValue(null);
 
       await expect(DispositiveService.assignUserToDispositive(999, mockAssignData))
-        .rejects.toThrow('Dispositive not found');
+        .rejects.toThrow('Dispositive with ID 999 was not found.');
       
       expect(DispositiveModel.findById).toHaveBeenCalledWith(999);
       expect(DispositiveModel.assignUser).not.toHaveBeenCalled();
@@ -281,7 +281,7 @@ describe('DispositiveService', () => {
       (DispositiveModel.findById as jest.Mock).mockResolvedValue(null);
 
       await expect(DispositiveService.blockDispositive(999, mockBlockData))
-        .rejects.toThrow('Dispositive not found');
+        .rejects.toThrow('Dispositive with ID 999 was not found.');
       
       expect(DispositiveModel.findById).toHaveBeenCalledWith(999);
       expect(DispositiveModel.blockDispositive).not.toHaveBeenCalled();
@@ -309,7 +309,7 @@ describe('DispositiveService', () => {
       (DispositiveModel.findById as jest.Mock).mockResolvedValue(null);
 
       await expect(DispositiveService.deleteDispositive(999))
-        .rejects.toThrow('Dispositive not found');
+        .rejects.toThrow('Dispositive with ID 999 was not found.');
       
       expect(DispositiveModel.findById).toHaveBeenCalledWith(999);
       expect(DispositiveModel.delete).not.toHaveBeenCalled();
