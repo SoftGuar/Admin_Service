@@ -64,7 +64,7 @@ describe('ProductService', () => {
       (ProductModel.findById as jest.Mock).mockResolvedValue(null);
 
       await expect(ProductService.getProductById(999))
-        .rejects.toThrow('Product not found');
+        .rejects.toThrow('Product with ID 999 was not found.');
       
       expect(ProductModel.findById).toHaveBeenCalledWith(999);
     });
@@ -121,7 +121,7 @@ describe('ProductService', () => {
       (ProductModel.findById as jest.Mock).mockResolvedValue(null);
 
       await expect(ProductService.updateProduct(999, mockUpdateData))
-        .rejects.toThrow('Product not found');
+        .rejects.toThrow('Product with ID 999 was not found.');
       
       expect(ProductModel.findById).toHaveBeenCalledWith(999);
       expect(ProductModel.update).not.toHaveBeenCalled();
@@ -170,7 +170,7 @@ describe('ProductService', () => {
       (ProductModel.findById as jest.Mock).mockResolvedValue(null);
 
       await expect(ProductService.deleteProduct(999))
-        .rejects.toThrow('Product not found');
+        .rejects.toThrow('Product with ID 999 was not found.');
       
       expect(ProductModel.findById).toHaveBeenCalledWith(999);
       expect(ProductModel.delete).not.toHaveBeenCalled();
