@@ -65,15 +65,14 @@ model User {
   password             String
   phone                String?
   created_at           DateTime               @default(now())
-  updated_at           DateTime               @default(now())
   MAC                  String
+  updated_at           DateTime               @default(now())
   Dispositive          Dispositive[]
+  environments         Environment[]
   HelperRecommendation HelperRecommendation[]
   Quotation            Quotation[]
   Transaction          Transaction[]
   helpers              Helper[]               @relation("UserHelpers")
-  environments         Environment[]          // Relation ajoutée manquante
-
 }
 
 model Helper {
@@ -252,62 +251,57 @@ model Notification {
 }
 
 model Environment {
-  id        Int                   @id @default(autoincrement())
-  userId    Int
-  zones     Zone[]
-  elements  EnvironmentElement[]
-  user      User @relation(fields: [userId], references: [id])
+  id       Int                  @id @default(autoincrement())
+  userId   Int
+  user     User                 @relation(fields: [userId], references: [id])
+  elements EnvironmentElement[]
+  zones    Zone[]
 }
 
 model Zone {
-  id            Int             @id @default(autoincrement())
-  environmentId Int
-  zoneType      ZoneType
-  limitsType    LimitsType
-  color         String
-  icon          String
-  environment      Environment        @relation(fields: [environmentId], references: [id])
-  circularLimits   CircularLimits?
-  polygonLimits    PolygonLimits?
-  pointsLimits     PointsLimits?
-  elementsLimits   ElementsLimits?
-  pois             POI[]
+  id             Int             @id @default(autoincrement())
+  environmentId  Int
+  zoneType       ZoneType
+  limitsType     LimitsType
+  color          String
+  icon           String
+  circularLimits CircularLimits?
+  elementsLimits ElementsLimits?
+  pointsLimits   PointsLimits?
+  polygonLimits  PolygonLimits?
+  environment    Environment     @relation(fields: [environmentId], references: [id])
+  pois           POI[]           @relation("POIToZone")
 }
 
 model POICategory {
-  id    Int   @id @default(autoincrement())
-  name  String
-  pois  POI[]
+  id   Int    @id @default(autoincrement())
+  name String
+  pois POI[]
 }
 
 model POI {
-  id             Int         @id @default(autoincrement())
-  coordinates    String
-  poiCategoryId  Int
-  name           String
-  description    String
-  category       POICategory @relation(fields: [poiCategoryId], references: [id])
-  zones          Zone[]
+  id            Int         @id @default(autoincrement())
+  coordinates   String
+  poiCategoryId Int
+  name          String
+  description   String
+  category      POICategory @relation(fields: [poiCategoryId], references: [id])
+  zones         Zone[]      @relation("POIToZone")
 }
 
 model ElementsLimits {
-  id      Int    @id @default(autoincrement())
-  zoneId  Int    @map("limits_id")  @unique
-
-  zone               Zone               @relation(fields: [zoneId], references: [id])
-
-  // Create an intermediate model for the many-to-many relationship
+  id                        Int                                  @id @default(autoincrement())
+  zoneId                    Int                                  @unique @map("limits_id")
+  zone                      Zone                                 @relation(fields: [zoneId], references: [id])
   environmentElementsLimits ElementsLimitsToEnvironmentElement[]
 }
 
-// Intermediate model for the many-to-many relationship
 model ElementsLimitsToEnvironmentElement {
-  id               Int               @id @default(autoincrement())
-  elementsLimitsId Int
-  environmentId    Int
-  objectId         Int
-
-  elementsLimits   ElementsLimits    @relation(fields: [elementsLimitsId], references: [id])
+  id                 Int                @id @default(autoincrement())
+  elementsLimitsId   Int
+  environmentId      Int
+  objectId           Int
+  elementsLimits     ElementsLimits     @relation(fields: [elementsLimitsId], references: [id])
   environmentElement EnvironmentElement @relation(fields: [environmentId, objectId], references: [environmentId, objectId])
 
   @@unique([elementsLimitsId, environmentId, objectId])
@@ -316,61 +310,52 @@ model ElementsLimitsToEnvironmentElement {
 model EnvironmentElement {
   environmentId  Int
   objectId       Int
-
-  environment    Environment @relation(fields: [environmentId], references: [id])
-  object         Object      @relation(fields: [objectId],      references: [id])
-
-  // Updated relation to the intermediate model
   elementsLimits ElementsLimitsToEnvironmentElement[]
-  
+  environment    Environment                          @relation(fields: [environmentId], references: [id])
+  object         Object                               @relation(fields: [objectId], references: [id])
+
   @@id([environmentId, objectId])
 }
 
 model Object {
-  id                   Int                  @id @default(autoincrement())
-  environmentElements  EnvironmentElement[]
+  id                  Int                  @id @default(autoincrement())
+  environmentElements EnvironmentElement[]
 }
 
 model CircularLimits {
-  id             Int    @id @default(autoincrement())
-  centerPointId  Int
-  radius         Float
-  zoneId         Int @unique
-
-  centerPoint  Point @relation(fields: [centerPointId], references: [id])
-  zone         Zone  @relation(fields: [zoneId],        references: [id])
+  id            Int   @id @default(autoincrement())
+  centerPointId Int
+  radius        Float
+  zoneId        Int   @unique
+  centerPoint   Point @relation(fields: [centerPointId], references: [id])
+  zone          Zone  @relation(fields: [zoneId], references: [id])
 }
 
 model PolygonLimits {
-  id             Int    @id @default(autoincrement())
-  centerPointId  Int
-  radius         Float
-  facesNb        Int
-  rotation       Float
-  zoneId         Int    @map("limits_id") @unique  // Added @unique
-
-  centerPoint  Point @relation(fields: [centerPointId], references: [id])
-  zone         Zone  @relation(fields: [zoneId], references: [id])
+  id            Int   @id @default(autoincrement())
+  centerPointId Int
+  radius        Float
+  facesNb       Int
+  rotation      Float
+  zoneId        Int   @unique @map("limits_id")
+  centerPoint   Point @relation(fields: [centerPointId], references: [id])
+  zone          Zone  @relation(fields: [zoneId], references: [id])
 }
 
 model PointsLimits {
-  id       Int      @id @default(autoincrement())
-  zoneId   Int      @map("limits_id") @unique  // Added @unique
-
-  zone     Zone     @relation(fields: [zoneId], references: [id])
-
-  points   Point[]
+  id     Int     @id @default(autoincrement())
+  zoneId Int     @unique @map("limits_id")
+  zone   Zone    @relation(fields: [zoneId], references: [id])
+  points Point[] @relation("PointToPointsLimits")
 }
 
 model Point {
-  id              Int              @id @default(autoincrement())
-  x               Float
-  y               Float
-
-  circularLimits  CircularLimits[]
-  polygonLimits   PolygonLimits[]
-
-  pointsLimits    PointsLimits[]
+  id             Int              @id @default(autoincrement())
+  x              Float
+  y              Float
+  circularLimits CircularLimits[]
+  polygonLimits  PolygonLimits[]
+  pointsLimits   PointsLimits[]   @relation("PointToPointsLimits")
 }
 
 enum InterventionStatus {
@@ -381,13 +366,13 @@ enum InterventionStatus {
 }
 
 enum ZoneType {
-   CIRCULATION
-   WORK
-   SERVICE
-   FORBIDDEN
-   DANGER
+  CIRCULATION
+  WORK
+  SERVICE
+  FORBIDDEN
+  DANGER
 }
- 
+
 enum LimitsType {
   CIRCULAR
   POLYGON
@@ -404,4 +389,3 @@ enum UserType {
   DECIDER
   HELPER
 }
-
